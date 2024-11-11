@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brain Stroke Prediction</title>
+    <style>
+        /* General Styling */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            background-color: #1a1a2e;
+            color: #f0f0f0;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Container for Image and Form */
+        .container {
+            display: flex;
+            width: 80%;
+            max-width: 1000px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        /* Left Side for Image */
+        .image-section {
+            flex: 1;
+            background-image: url('image3.jpg'); /* Replace with your image URL or path */
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            min-height: 600px;
+        }
+
+        /* Right Side for Form */
+        .form-section {
+            flex: 1;
+            padding: 30px;
+            background: #2e2e4d;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #f9d342;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input, select, button {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input, select {
+            background-color: #33334d;
+            color: #f0f0f0;
+        }
+
+        button {
+            background-color: #f9d342;
+            color: #1a1a2e;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            animation: button-pulse 1s ease infinite;
+        }
+
+        button:hover {
+            background-color: #ffc107;
+        }
+
+        /* Button Animation */
+        @keyframes button-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Animation on Click */
+        button:active {
+            animation: click-shrink 0.1s forwards;
+        }
+
+        @keyframes click-shrink {
+            0% { transform: scale(1); }
+            100% { transform: scale(0.95); }
+        }
+
+        p#result {
+            font-weight: bold;
+            font-size: 18px;
+            color: #e94560;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Side Image -->
+        <div class="image-section"></div>
+
+        <!-- Right Side Form -->
+        <div class="form-section">
+            <h1>Brain Stroke Prediction</h1>
+            <form id="predictionForm">
+                <label for="age">Age</label>
+                <input type="number" id="age" placeholder="Enter your age" required>
+
+                <label for="bloodPressure">Blood Pressure</label>
+                <input type="number" id="bloodPressure" placeholder="Enter blood pressure" required>
+
+                <label for="cholesterol">Cholesterol Level</label>
+                <input type="number" id="cholesterol" placeholder="Enter cholesterol level" required>
+
+                <label for="smoking">Smoking Status</label>
+                <select id="smoking">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+
+                <label for="diabetes">Diabetes Status</label>
+                <select id="diabetes">
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                </select>
+
+                <label for="gender">Gender</label>
+                <select id="gender">
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+
+                <label for="activityLevel">Physical Activity Level</label>
+                <select id="activityLevel">
+                    <option value="high">High</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="low">Low</option>
+                </select>
+
+                <button type="button" onclick="predictStroke()">Predict</button>
+            </form>
+            <p id="result"></p>
+        </div>
+    </div>
+
+    <script>
+        function predictStroke() {
+            const age = parseInt(document.getElementById('age').value);
+            const bloodPressure = parseInt(document.getElementById('bloodPressure').value);
+            const cholesterol = parseInt(document.getElementById('cholesterol').value);
+            const smoking = document.getElementById('smoking').value;
+            const diabetes = document.getElementById('diabetes').value;
+            const gender = document.getElementById('gender').value;
+            const activityLevel = document.getElementById('activityLevel').value;
+            let result = "";
+
+            // Arbitrary conditions for stroke risk prediction
+            if (age > 60 && bloodPressure > 140 && cholesterol > 240 && smoking === "yes") {
+                result = "Warning: Very high risk of brain stroke. Please consult a doctor immediately.";
+            } else if (age > 50 && bloodPressure > 130 && (cholesterol > 200 || smoking === "yes") && diabetes === "yes") {
+                result = "High risk of brain stroke. Consult a healthcare professional.";
+            } else if (age > 50 || bloodPressure > 130 || (cholesterol > 200 && activityLevel === "low")) {
+                result = "Moderate risk of brain stroke. Consider monitoring your health.";
+            } else if (age < 30 && activityLevel === "high") {
+                result = "Low risk of brain stroke. Keep up the good work!";
+            } else if (diabetes === "yes" && (cholesterol > 200 || bloodPressure > 130)) {
+                result = "Caution: There may be a moderate risk of brain stroke.";
+            } else {
+                result = "Low risk of brain stroke.";
+            }
+
+            document.getElementById('result').innerText = result;
+        }
+    </script>
+</body>
+</html>
